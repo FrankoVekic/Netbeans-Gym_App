@@ -30,7 +30,12 @@
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         
         
-         <!-- <mapping class="model.Admin" /> -->
+        <mapping class="gymapp.model.Admin" /> 
+        <mapping class="gymapp.model.Member" />
+        <mapping class="gymapp.model.Program" />        
+        <mapping class="gymapp.model.Trainer" /> 
+        <mapping class="gymapp.model.Payment" />       
+        <mapping class="gymapp.model.ProgramMemberTrainer" />  
         
         
     </session-factory>

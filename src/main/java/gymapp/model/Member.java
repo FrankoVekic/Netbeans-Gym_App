@@ -7,14 +7,15 @@ package gymapp.model;
 
 
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.OneToMany;
+
 /**
  *
  */
 @Entity
-public class Trainer extends gymapp.model.Entity {
+public class Member extends gymapp.model.Entity {
 
     @Column(columnDefinition = "varchar(255)", nullable = false)
     private String name;
@@ -26,9 +27,15 @@ public class Trainer extends gymapp.model.Entity {
     private String phoneNumber;
     @Column(columnDefinition = "char(11)", nullable = false)
     private String oib;
+    @Column(nullable = false)
+    private Boolean active;
     
-    @OneToMany(mappedBy = "trainer")
+    @OneToMany(mappedBy = "member")
     private List<ProgramMemberTrainer> programMemberTrainer;
+    
+    @OneToMany (mappedBy = "member")
+    private List<Payment> payment;
+
 
     public String getName() {
         return name;
@@ -68,7 +75,23 @@ public class Trainer extends gymapp.model.Entity {
 
     public void setOib(String oib) {
         this.oib = oib;
-    }    
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public List<Payment> getPayment() {
+        return payment;
+    }
+
+    public void setPayment(List<Payment> payment) {
+        this.payment = payment;
+    }
 
     public List<ProgramMemberTrainer> getProgramMemberTrainer() {
         return programMemberTrainer;
@@ -77,5 +100,7 @@ public class Trainer extends gymapp.model.Entity {
     public void setProgramMemberTrainer(List<ProgramMemberTrainer> programMemberTrainer) {
         this.programMemberTrainer = programMemberTrainer;
     }
-
+    
+    
+    
 }

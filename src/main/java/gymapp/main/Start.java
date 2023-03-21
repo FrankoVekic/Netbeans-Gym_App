@@ -5,11 +5,15 @@
 
 package gymapp.main;
 
+import gymapp.utility.HibernateUtility;
+
 /**
  *
  */
 public class Start {
     public static void main(String[] args) {
+        
+        HibernateUtility.getSession();
         
     }
 }
