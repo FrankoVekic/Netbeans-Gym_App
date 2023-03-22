@@ -24,9 +24,11 @@ public class FakerInput {
         
         List<Member> members = new ArrayList();
         
-        Member m = new Member();
+        Member m;
 
         for(int i = 0; i < 80; i++){
+            
+            m = new Member();
             
             m.setName(faker.name().firstName());
             m.setSurname(faker.name().lastName());
@@ -35,6 +37,9 @@ public class FakerInput {
             m.setOib(createOib());
             m.setPhoneNumber(faker.phoneNumber().cellPhone());
             m.setActive(faker.bool().bool());
+            session.save(m);
+            members.add(m);
+            
         }
         
         return members;
