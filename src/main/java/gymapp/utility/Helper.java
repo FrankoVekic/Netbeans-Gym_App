@@ -36,5 +36,18 @@ public class Helper {
         return "";
         
     }
-
+    
+/*
+    private static String createOib() {
+        int[] num = {0,1,2,3,4,5,6,7,8,9};
+        String s = "";
+        
+          for(int i = 0; i < 11; i++){
+            Random r = new Random();
+            int a = r.nextInt(9);
+            s = s+ num[a];         
+        }
+          return s;
+    }*/
+    
 }

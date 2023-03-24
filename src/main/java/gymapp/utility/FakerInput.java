@@ -8,7 +8,9 @@ package gymapp.utility;
 import com.github.javafaker.Faker;
 import gymapp.model.Admin;
 import gymapp.model.Member;
+import gymapp.model.Program;
 import gymapp.model.Trainer;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,10 +21,23 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  */
 public class FakerInput {
+    
+    public static void executeFakerInserts(){
+        Session session = HibernateUtility.getSession();
+        session.beginTransaction();
+        Faker faker = new Faker();
+        
+        List<Admin> admins = generateAdmins(faker, session);
+        List<Trainer> trainers = generateTrainers(faker, session);
+        List<Member> members = generateMembers(faker, session);
+        List<Program> programs = generatePrograms(session);
+        
+        session.getTransaction().commit();
+    }
 
     
 
-    private static List<Member> generateMembers(Faker faker, Session session) throws Exception{
+    private static List<Member> generateMembers(Faker faker, Session session){
         
         
         List<Member> members = new ArrayList();
@@ -87,17 +102,45 @@ public class FakerInput {
         
         return admins;
     }
-/*
-    private static String createOib() {
-        int[] num = {0,1,2,3,4,5,6,7,8,9};
-        String s = "";
-        
-          for(int i = 0; i < 11; i++){
-            Random r = new Random();
-            int a = r.nextInt(9);
-            s = s+ num[a];         
-        }
-          return s;
-    }*/
     
+    private static List<Program> generatePrograms(Session session){
+        
+        List<Program> programs = new ArrayList();
+        
+        Program p;
+        //Silver Program
+        p = new Program();
+        p.setName("Silver Program");
+        p.setDescription("This program is intended for people who plan to train "
+                + "recreationally in the gym, the training is held privately by a "
+                + "trainer of their choice 2 times a week.");
+        p.setPrice(BigDecimal.valueOf(150));
+        session.save(p);
+        programs.add(p);
+        
+        //Gold Program
+        p = new Program();
+        p.setName("Gold Program");
+        p.setDescription("This program is intended for people who plan to train "
+                + "more often. In addition to their training, a private trainer will "
+                + "guide them as well as their nutrition plan. I can train 4 times a "
+                + "week.");
+        p.setPrice(BigDecimal.valueOf(300));
+        session.save(p);
+        programs.add(p);
+        
+        //Premium Program
+        p = new Program();
+        p.setName("Premium Program");
+        p.setDescription("This program is the best we have to offer."
+                + " You will have a personal trainer who is at your "
+                + "disposal for any question at any time of the day, 7 "
+                + "days a week. You can train with snow every day. The "
+                + "trainer also guides you on a diet plan.");
+        p.setPrice(BigDecimal.valueOf(300));
+        session.save(p);
+        programs.add(p);
+               
+        return programs;
+    }
 }
