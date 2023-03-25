@@ -5,6 +5,7 @@
 
 package gymapp.main;
 
+import gymapp.utility.FakerInput;
 import gymapp.utility.HibernateUtility;
 
 /**
@@ -13,7 +14,8 @@ import gymapp.utility.HibernateUtility;
 public class Start {
     public static void main(String[] args) {
         
-        HibernateUtility.getSession();
+        //HibernateUtility.getSession();
+        FakerInput.executeFakerInserts();
         
     }
 }

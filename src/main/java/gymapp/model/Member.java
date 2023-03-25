@@ -2,9 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package gymapp.model;
-
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -29,13 +27,9 @@ public class Member extends gymapp.model.Entity {
     private String oib;
     @Column(nullable = false)
     private Boolean active;
-    
+
     @OneToMany(mappedBy = "member")
     private List<ProgramMemberTrainer> programMemberTrainer;
-    
-    @OneToMany (mappedBy = "member")
-    private List<Payment> payment;
-
 
     public String getName() {
         return name;
@@ -85,14 +79,6 @@ public class Member extends gymapp.model.Entity {
         this.active = active;
     }
 
-    public List<Payment> getPayment() {
-        return payment;
-    }
-
-    public void setPayment(List<Payment> payment) {
-        this.payment = payment;
-    }
-
     public List<ProgramMemberTrainer> getProgramMemberTrainer() {
         return programMemberTrainer;
     }
@@ -100,7 +86,5 @@ public class Member extends gymapp.model.Entity {
     public void setProgramMemberTrainer(List<ProgramMemberTrainer> programMemberTrainer) {
         this.programMemberTrainer = programMemberTrainer;
     }
-    
-    
-    
+
 }

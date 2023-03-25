@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 /**
  *
  */
-@Entity
+@Entity(name = "training_session")
 public class ProgramMemberTrainer extends gymapp.model.Entity {
 
     @ManyToOne
