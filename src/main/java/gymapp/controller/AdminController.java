@@ -32,7 +32,11 @@ public class AdminController extends Controller<Admin> {
 
     @Override
     protected void controlUpdate() throws GymAppException {
-
+        controlName();
+        controlSurname();
+        controlEmailUpdate();
+        controlUsername();
+        controlPassword();
     }
 
     @Override
@@ -80,7 +84,7 @@ public class AdminController extends Controller<Admin> {
         if (entity.getUsername().trim().length() < 3) {
             throw new GymAppException("Username has to have atleast 3 characters.");
         }
-        
+
         List<Admin> admins = session.createQuery("from Admin a "
                 + "where a.username =:username").setParameter("username", entity.getUsername()).list();
 
@@ -109,6 +113,29 @@ public class AdminController extends Controller<Admin> {
         List<Admin> admins = session.createQuery("from Admin a "
                 + "where a.email=:email")
                 .setParameter("email", entity.getEmail()).list();
+
+        if (admins != null && admins.size() > 0) {
+            throw new GymAppException("This email is already in use.");
+        }
+
+        try {
+            InternetAddress emailAddr = new InternetAddress(entity.getEmail());
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            throw new GymAppException("Invalid email.");
+        }
+    }
+
+    private void controlEmailUpdate() throws GymAppException {
+        if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
+            throw new GymAppException("Invalid email.");
+        }
+
+        List<Admin> admins = session.createQuery("from Admin a "
+                + "where a.email=:email and a.id !=:id")
+                .setParameter("email", entity.getEmail())
+                .setParameter("id", entity.getId())
+                .list();
 
         if (admins != null && admins.size() > 0) {
             throw new GymAppException("This email is already in use.");
