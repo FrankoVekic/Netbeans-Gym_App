@@ -25,9 +25,9 @@ public class AdminController extends Controller<Admin> {
     protected void controlCreate() throws GymAppException {
         controlName();
         controlSurname();
+        controlEmail();
         controlUsername();
         controlPassword();
-        controlEmail();
     }
 
     @Override
@@ -55,9 +55,6 @@ public class AdminController extends Controller<Admin> {
         if (entity.getName().trim().length() < 2) {
             throw new GymAppException("Name has to have atleast 2 characters.");
         }
-        if (!Pattern.matches("[a-zA-Z]+", entity.getName())) {
-            throw new GymAppException("Name can cointain only letters.");
-        }
     }
 
     private void controlSurname() throws GymAppException {
@@ -70,9 +67,7 @@ public class AdminController extends Controller<Admin> {
         if (entity.getSurname().trim().length() < 2) {
             throw new GymAppException("Surname has to have atleast 2 characters.");
         }
-        if (!Pattern.matches("[a-zA-Z]+", entity.getSurname())) {
-            throw new GymAppException("Surname can cointain only letters.");
-        }
+
     }
 
     private void controlUsername() throws GymAppException {
@@ -84,6 +79,13 @@ public class AdminController extends Controller<Admin> {
         }
         if (entity.getUsername().trim().length() < 3) {
             throw new GymAppException("Username has to have atleast 3 characters.");
+        }
+        
+        List<Admin> admins = session.createQuery("from Admin a "
+                + "where a.username =:username").setParameter("username", entity.getUsername()).list();
+
+        if (admins != null && admins.size() > 0) {
+            throw new GymAppException(entity.getUsername() + " is already in use.");
         }
     }
 
@@ -102,6 +104,14 @@ public class AdminController extends Controller<Admin> {
     private void controlEmail() throws GymAppException {
         if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
             throw new GymAppException("Invalid email.");
+        }
+
+        List<Admin> admins = session.createQuery("from Admin a "
+                + "where a.email=:email")
+                .setParameter("email", entity.getEmail()).list();
+
+        if (admins != null && admins.size() > 0) {
+            throw new GymAppException("This email is already in use.");
         }
 
         try {
