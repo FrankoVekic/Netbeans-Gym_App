@@ -4,22 +4,21 @@
  */
 package gymapp.controller;
 
-import gymapp.model.Member;
+import gymapp.model.Trainer;
 import gymapp.utility.GymAppException;
 import gymapp.utility.OibValidation;
 import java.util.List;
-import java.util.regex.Pattern;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 /**
  *
  */
-public class MemberController extends Controller<Member> {
+public class TrainerController extends Controller<Trainer> {
 
     @Override
-    public List<Member> read() {
-        return session.createQuery("from Member").list();
+    public List<Trainer> read() {
+        return session.createQuery("from Trainer").list();
     }
 
     @Override
@@ -29,7 +28,6 @@ public class MemberController extends Controller<Member> {
         controlEmail();
         controlOib();
         controlPhoneNumber();
-
     }
 
     @Override
@@ -71,16 +69,16 @@ public class MemberController extends Controller<Member> {
         }
     }
 
-    private void controlEmail() throws GymAppException {
+    private void controlEmail() throws GymAppException{
         if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
             throw new GymAppException("Invalid email.");
         }
 
-        List<Member> members = session.createQuery("from Member m "
-                + "where m.email=:email")
+        List<Trainer> trainers = session.createQuery("from Trainer t "
+                + "where t.email=:email")
                 .setParameter("email", entity.getEmail()).list();
 
-        if (members != null && members.size() > 0) {
+        if (trainers != null && trainers.size() > 0) {
             throw new GymAppException("This email is already in use.");
         }
 
@@ -101,11 +99,11 @@ public class MemberController extends Controller<Member> {
             throw new GymAppException("OIB is invalid.");
         }
         
-         List<Member> members = session.createQuery("from Member m "
-                + "where m.oib=:oib")
+         List<Trainer> trainers = session.createQuery("from Trainer t "
+                + "where t.oib=:oib")
                 .setParameter("oib", entity.getOib()).list();
 
-        if (members != null && members.size() > 0) {
+        if (trainers != null && trainers.size() > 0) {
             throw new GymAppException("The OIB you entered is already in use");
         }
     }
