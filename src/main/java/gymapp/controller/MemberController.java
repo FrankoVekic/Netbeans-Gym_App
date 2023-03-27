@@ -34,7 +34,11 @@ public class MemberController extends Controller<Member> {
 
     @Override
     protected void controlUpdate() throws GymAppException {
-
+        controlName();
+        controlSurname();
+        controlEmailUpdate();
+        controlOibUpdate();
+        controlPhoneNumber();
     }
 
     @Override
@@ -100,8 +104,8 @@ public class MemberController extends Controller<Member> {
         if (!OibValidation.checkOIB(entity.getOib())) {
             throw new GymAppException("OIB is invalid.");
         }
-        
-         List<Member> members = session.createQuery("from Member m "
+
+        List<Member> members = session.createQuery("from Member m "
                 + "where m.oib=:oib")
                 .setParameter("oib", entity.getOib()).list();
 
@@ -110,7 +114,6 @@ public class MemberController extends Controller<Member> {
         }
     }
 
-
     private void controlPhoneNumber() throws GymAppException {
         if (entity.getPhoneNumber() == null || entity.getPhoneNumber().trim().isEmpty()) {
             throw new GymAppException("Invalid phone number");
@@ -118,7 +121,7 @@ public class MemberController extends Controller<Member> {
         if (!entity.getPhoneNumber().startsWith("09") && !entity.getPhoneNumber().startsWith("+385")) {
             throw new GymAppException("Invalid phone number format.");
         }
-        if(entity.getPhoneNumber().trim().length() > 13 || entity.getPhoneNumber().trim().length() < 9 ){
+        if (entity.getPhoneNumber().trim().length() > 13 || entity.getPhoneNumber().trim().length() < 9) {
             throw new GymAppException("Invalid phone number length.");
         }
         if (entity.getPhoneNumber().trim().length() < 9 || entity.getPhoneNumber().trim().length() > 13) {
@@ -127,4 +130,43 @@ public class MemberController extends Controller<Member> {
 
     }
 
+    private void controlEmailUpdate() throws GymAppException {
+        if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
+            throw new GymAppException("Invalid email.");
+        }
+
+        List<Member> members = session.createQuery("from Member m "
+                + "where m.email=:email and m.id !=:id")
+                .setParameter("email", entity.getEmail())
+                .setParameter("id", entity.getId())
+                .list();
+
+        if (members != null && members.size() > 0) {
+            throw new GymAppException("This email is already in use.");
+        }
+
+        try {
+            InternetAddress emailAddr = new InternetAddress(entity.getEmail());
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            throw new GymAppException("Invalid email.");
+        }
+    }
+
+    private void controlOibUpdate() throws GymAppException {
+        if (entity.getOib() == null || entity.getOib().trim().isEmpty()) {
+            throw new GymAppException("OIB is invalid.");
+        }
+        if (!OibValidation.checkOIB(entity.getOib())) {
+            throw new GymAppException("OIB is invalid.");
+        }
+
+        List<Member> members = session.createQuery("from Member m "
+                + "where m.oib=:oib and m.id !=:id")
+                .setParameter("oib", entity.getOib()).list();
+
+        if (members != null && members.size() > 0) {
+            throw new GymAppException("The OIB you entered is already in use");
+        }
+    }
 }
