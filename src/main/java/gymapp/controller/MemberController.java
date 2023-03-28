@@ -163,7 +163,8 @@ public class MemberController extends Controller<Member> {
 
         List<Member> members = session.createQuery("from Member m "
                 + "where m.oib=:oib and m.id !=:id")
-                .setParameter("oib", entity.getOib()).list();
+                .setParameter("oib", entity.getOib())
+                .setParameter("id", entity.getId()).list();
 
         if (members != null && members.size() > 0) {
             throw new GymAppException("The OIB you entered is already in use");

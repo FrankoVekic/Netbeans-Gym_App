@@ -28,7 +28,9 @@ public class ProgramController extends Controller<Program> {
 
     @Override
     protected void controlUpdate() throws GymAppException {
-
+        controlNameUpdate();
+        controlPrice();
+        controlDescription();
     }
 
     @Override
@@ -82,6 +84,26 @@ public class ProgramController extends Controller<Program> {
         }
         if (entity.getDescription().trim().length() > 15000) {
             throw new GymAppException("Description is too big.");
+        }
+    }
+
+    private void controlNameUpdate() throws GymAppException {
+        if (entity.getName() == null || entity.getName().trim().isEmpty()) {
+            throw new GymAppException("Name is required.");
+        }
+        if (entity.getName().trim().length() > 255) {
+            throw new GymAppException("Your name has to many characters.");
+        }
+        if (entity.getName().trim().length() < 2) {
+            throw new GymAppException("Name has to have atleast 2 characters.");
+        }
+
+        List<Program> programs = session.createQuery("from Program p"
+                + " where p.name=:name and p.id !=id ")
+                .setParameter("name", entity.getName())
+                .setParameter("id", entity.getId()).list();
+        if (programs != null && programs.size() > 0) {
+            throw new GymAppException("This Program name is already in use.");
         }
     }
 

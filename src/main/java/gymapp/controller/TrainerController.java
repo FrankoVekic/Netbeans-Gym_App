@@ -161,7 +161,8 @@ public class TrainerController extends Controller<Trainer> {
 
         List<Trainer> trainers = session.createQuery("from Trainer t "
                 + "where t.oib=:oib and t.id !=:id")
-                .setParameter("oib", entity.getOib()).list();
+                .setParameter("oib", entity.getOib())
+                .setParameter("id", entity.getId()).list();
 
         if (trainers != null && trainers.size() > 0) {
             throw new GymAppException("The OIB you entered is already in use");
