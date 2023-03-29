@@ -7,6 +7,7 @@ package gymapp.main;
 
 import gymapp.utility.FakerInput;
 import gymapp.utility.HibernateUtility;
+import gymapp.view.SplashScreen;
 
 /**
  *
@@ -15,7 +16,7 @@ public class Start {
     public static void main(String[] args) {
         
         //HibernateUtility.getSession();
-        FakerInput.executeFakerInserts();
-        
+        //FakerInput.executeFakerInserts();
+        new SplashScreen().setVisible(true);
     }
 }

@@ -51,7 +51,7 @@ public class TrainerController extends Controller<Trainer> {
 
     private void controlName() throws GymAppException {
         if (entity.getName() == null || entity.getName().trim().isEmpty()) {
-            throw new GymAppException("Invalid name.");
+            throw new GymAppException("Name is required.");
         }
         if (entity.getName().trim().length() > 255) {
             throw new GymAppException("Your name has to many characters.");
@@ -63,7 +63,7 @@ public class TrainerController extends Controller<Trainer> {
 
     private void controlSurname() throws GymAppException {
         if (entity.getSurname() == null || entity.getSurname().trim().isEmpty()) {
-            throw new GymAppException("Invalid surname.");
+            throw new GymAppException("Surname is required.");
         }
         if (entity.getSurname().trim().length() > 255) {
             throw new GymAppException("Your surname has to many characters.");
@@ -75,7 +75,7 @@ public class TrainerController extends Controller<Trainer> {
 
     private void controlEmail() throws GymAppException {
         if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
-            throw new GymAppException("Invalid email.");
+            throw new GymAppException("Email is required.");
         }
 
         List<Trainer> trainers = session.createQuery("from Trainer t "
@@ -97,7 +97,7 @@ public class TrainerController extends Controller<Trainer> {
     private void controlOib() throws GymAppException {
 
         if (entity.getOib() == null || entity.getOib().trim().isEmpty()) {
-            throw new GymAppException("OIB is invalid.");
+            throw new GymAppException("OIB is required.");
         }
         if (!OibValidation.checkOIB(entity.getOib())) {
             throw new GymAppException("OIB is invalid.");
@@ -114,7 +114,7 @@ public class TrainerController extends Controller<Trainer> {
 
     private void controlPhoneNumber() throws GymAppException {
         if (entity.getPhoneNumber() == null || entity.getPhoneNumber().trim().isEmpty()) {
-            throw new GymAppException("Invalid phone number");
+            throw new GymAppException("Phone number is required.");
         }
         if (!entity.getPhoneNumber().startsWith("09") && !entity.getPhoneNumber().startsWith("+385")) {
             throw new GymAppException("Invalid phone number format.");
@@ -153,7 +153,7 @@ public class TrainerController extends Controller<Trainer> {
 
     private void controlOibUpdate() throws GymAppException {
         if (entity.getOib() == null || entity.getOib().trim().isEmpty()) {
-            throw new GymAppException("OIB is invalid.");
+            throw new GymAppException("OIB is required.");
         }
         if (!OibValidation.checkOIB(entity.getOib())) {
             throw new GymAppException("OIB is invalid.");
