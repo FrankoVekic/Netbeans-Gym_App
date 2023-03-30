@@ -4,6 +4,7 @@
  */
 package gymapp.view;
 
+import gymapp.utility.Helper;
 import gymapp.utility.HibernateUtility;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
@@ -14,56 +15,52 @@ import org.hibernate.Session;
  */
 public class SplashScreen extends javax.swing.JFrame {
 
-       private int i = 0;
-       private boolean hibernateDone;
-       
+    private int i = 0;
+    private boolean hibernateDone;
+
     public SplashScreen() {
         initComponents();
         Loading loading = new Loading();
         loading.start();
-        
-
+        setTitle(Helper.getTitle(""));
     }
 
-    
-    
     private class Loading extends Thread {
+
         @Override
         public void run() {
             Session s = HibernateUtility.getSession();
             if (s.getMetamodel().getEntities().size() > 0) {
                 hibernateDone = true;
-                for(int t=i;t<100;t++){
-                    try {                       
+                for (int t = i; t < 100; t++) {
+                    try {
                         Thread.sleep(50);
                         LoadingBar.setValue(++i);
                         LoadingValue.setText(t + "%");
-                        
-                        if(t == 20){
+
+                        if (t == 20) {
                             LoadingLabel.setText("Turning On Modules...");
                         }
-                        if(t == 40){
+                        if (t == 40) {
                             LoadingLabel.setText("Loading Modules...");
                         }
-                        if(t == 60){
+                        if (t == 60) {
                             LoadingLabel.setText("Connection to Database...");
                         }
-                        if(t == 80){
+                        if (t == 80) {
                             LoadingLabel.setText("Launching Application");
                         }
                         LoadingBar.setValue(t);
                     } catch (Exception e) {
                     }
-                    
                 }
                 new Authorization().setVisible(true);
-                dispose();        
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(getRootPane(), "Problem with connecting to the Database.");
             }
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,8 +78,11 @@ public class SplashScreen extends javax.swing.JFrame {
         LoadingValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         BackGroundPanel.setBackground(new java.awt.Color(255, 255, 255));
+        BackGroundPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         BackGroundPanel.setMinimumSize(new java.awt.Dimension(900, 500));
         BackGroundPanel.setPreferredSize(new java.awt.Dimension(800, 400));
         BackGroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,7 +105,7 @@ public class SplashScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BackGroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 850, Short.MAX_VALUE)
+            .addComponent(BackGroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

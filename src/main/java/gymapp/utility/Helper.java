@@ -5,6 +5,7 @@
 
 package gymapp.utility;
 
+import gymapp.model.Admin;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -16,6 +17,18 @@ import us.codecraft.xsoup.Xsoup;
  *
  */
 public class Helper {
+    
+    public static Admin admin;
+    public static final String APP_TITLE = "Hustle Hard";
+    
+    public static String getTitle(String title){
+        
+        if(Helper.admin == null){
+            return APP_TITLE + " - " +  title;
+        }
+        return APP_TITLE + " Welcome - " + admin.getName() + " " + admin.getSurname();
+    
+}
     
     public static String generateOib(){
         try {
