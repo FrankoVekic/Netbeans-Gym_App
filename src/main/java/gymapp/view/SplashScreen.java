@@ -52,10 +52,12 @@ public class SplashScreen extends javax.swing.JFrame {
                         }
                         LoadingBar.setValue(t);
                     } catch (Exception e) {
+
                     }
                 }
                 new Authorization().setVisible(true);
                 dispose();
+
             } else {
                 JOptionPane.showMessageDialog(getRootPane(), "Problem with connecting to the Database.");
             }

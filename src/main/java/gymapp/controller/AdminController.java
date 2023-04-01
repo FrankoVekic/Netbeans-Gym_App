@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.persistence.NoResultException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -147,6 +149,22 @@ public class AdminController extends Controller<Admin> {
         } catch (AddressException ex) {
             throw new GymAppException("Invalid email.");
         }
+    }
+    
+    public Admin authorize (String username, String password){
+        
+        Admin admin = null;
+        
+        try {
+            admin = (Admin)session.createQuery("from Admin where username =:username")
+                    .setParameter("username", username).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        if(admin == null){
+            return null;
+        }
+        return BCrypt.checkpw(password, admin.getPassword()) ? admin : null;
     }
 
 }

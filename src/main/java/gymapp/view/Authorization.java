@@ -5,8 +5,11 @@
 package gymapp.view;
 
 import gymapp.controller.AdminController;
+import gymapp.model.Admin;
 import gymapp.utility.Helper;
+
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +23,6 @@ public class Authorization extends javax.swing.JFrame {
         initComponents();
         adminController = new AdminController();
         setTitle(Helper.getTitle("Authorization"));
-
     }
 
     /**
@@ -36,10 +38,10 @@ public class Authorization extends javax.swing.JFrame {
         LoginImageLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         PasswordLabel = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         UsernameLabel = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,16 +58,11 @@ public class Authorization extends javax.swing.JFrame {
         PasswordLabel.setForeground(new java.awt.Color(51, 51, 51));
         PasswordLabel.setText("Password:");
 
-        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtPasswordKeyPressed(evt);
-            }
-        });
-
         UsernameLabel.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         UsernameLabel.setForeground(new java.awt.Color(51, 51, 51));
         UsernameLabel.setText("Username:");
 
+        txtUsername.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtUsernameKeyPressed(evt);
@@ -78,6 +75,12 @@ public class Authorization extends javax.swing.JFrame {
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
             }
         });
 
@@ -94,17 +97,17 @@ public class Authorization extends javax.swing.JFrame {
                 .addComponent(LoginImageLabel)
                 .addGroup(BackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BackgroundPanelLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(BackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(UsernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 62, Short.MAX_VALUE))
-                    .addGroup(BackgroundPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(119, 119, 119))))
+                        .addGap(119, 119, 119))
+                    .addGroup(BackgroundPanelLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(BackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPassword)
+                            .addComponent(PasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UsernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
+                        .addGap(0, 62, Short.MAX_VALUE))))
         );
         BackgroundPanelLayout.setVerticalGroup(
             BackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,12 +119,12 @@ public class Authorization extends javax.swing.JFrame {
                         .addGap(99, 99, 99)
                         .addComponent(UsernameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
                         .addComponent(PasswordLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(BackgroundPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -154,18 +157,19 @@ public class Authorization extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtUsernameKeyPressed
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        authorize();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
-        if (txtPassword.getText().trim().isEmpty()) {
-            txtPassword.requestFocus();
+        if (txtUsername.getText().trim().isEmpty()) {
+            txtUsername.requestFocus();
             return;
         }
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             authorize();
+        }
     }//GEN-LAST:event_txtPasswordKeyPressed
-    }
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        authorize();
-    }//GEN-LAST:event_btnLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BackgroundPanel;
@@ -174,11 +178,31 @@ public class Authorization extends javax.swing.JFrame {
     private javax.swing.JLabel UsernameLabel;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
     private void authorize() {
-        //authorization
+        if (txtUsername.getText().trim().isEmpty()) {
+            txtUsername.requestFocus();
+            return;
+        }
+        if (txtPassword.getPassword().length == 0) {
+            txtPassword.requestFocus();
+            return;
+        }
+
+        Admin admin = adminController.authorize(txtUsername.getText(), new String(txtPassword.getPassword()));
+
+        if (admin == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Something went wrong, please try again.");
+            return;
+        }
+
+        Helper.admin = admin;
+
+        new MainMenu().setVisible(true);
+        dispose();
+
     }
 }
