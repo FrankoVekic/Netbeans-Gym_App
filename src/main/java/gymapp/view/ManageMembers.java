@@ -71,8 +71,10 @@ public class ManageMembers extends javax.swing.JFrame {
         txtOib = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
-        btnChange = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
         cbxActivity = new javax.swing.JCheckBox();
+        btnChange = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -154,7 +156,18 @@ public class ManageMembers extends javax.swing.JFrame {
         BackGroundPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 150, 20));
 
         btnRemove.setText("Remove");
-        BackGroundPanel.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 520, 140, -1));
+        BackGroundPanel.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 510, 90, -1));
+
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+        BackGroundPanel.add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 90, -1));
+
+        cbxActivity.setText("Active");
+        BackGroundPanel.add(cbxActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 460, 70, -1));
 
         btnChange.setText("Change");
         btnChange.addActionListener(new java.awt.event.ActionListener() {
@@ -162,10 +175,15 @@ public class ManageMembers extends javax.swing.JFrame {
                 btnChangeActionPerformed(evt);
             }
         });
-        BackGroundPanel.add(btnChange, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 520, 140, -1));
+        BackGroundPanel.add(btnChange, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 510, 90, -1));
 
-        cbxActivity.setText("Active");
-        BackGroundPanel.add(cbxActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 460, 70, -1));
+        btnClear.setText("Clear All");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        BackGroundPanel.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 210, 80, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,8 +220,20 @@ public class ManageMembers extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lstEntitiesValueChanged
 
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+         try {
+            memberController.setEntity(new Member());
+            verifyData();
+            memberController.create();
+            load();
+            JOptionPane.showMessageDialog(getRootPane(), "You successfully created member: " + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname());
+        } catch (GymAppException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
+        }
+    }//GEN-LAST:event_btnCreateActionPerformed
+
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
-        if(memberController.getEntity() == null){
+         if(memberController.getEntity() == null){
             JOptionPane.showMessageDialog(getRootPane(), "You have to SELECT a member to change its data.");
             return;
         }
@@ -217,6 +247,15 @@ public class ManageMembers extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnChangeActionPerformed
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtName.setText("");
+        txtSurname.setText("");
+        txtEmail.setText("");
+        txtOib.setText("");
+        txtPhoneNumber.setText("");
+        cbxActivity.setSelected(false);
+    }//GEN-LAST:event_btnClearActionPerformed
+
      private void verifyData() {
         var m = memberController.getEntity();
         m.setName(txtName.getText());
@@ -227,6 +266,7 @@ public class ManageMembers extends javax.swing.JFrame {
         m.setActive(cbxActivity.isSelected());
 
     }
+   
     /**
      * @param args the command line arguments
      */
@@ -242,6 +282,8 @@ public class ManageMembers extends javax.swing.JFrame {
     private javax.swing.JPanel BackGroundPanel;
     private javax.swing.JPanel TitlePanel;
     private javax.swing.JButton btnChange;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnRemove;
     private javax.swing.JCheckBox cbxActivity;
     private javax.swing.JLabel jLabel10;
