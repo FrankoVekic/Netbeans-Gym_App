@@ -6,11 +6,13 @@ package gymapp.view;
 
 import gymapp.controller.MemberController;
 import gymapp.model.Member;
+import gymapp.utility.GymAppException;
 import gymapp.utility.Helper;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -155,6 +157,11 @@ public class ManageMembers extends javax.swing.JFrame {
         BackGroundPanel.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 520, 140, -1));
 
         btnChange.setText("Change");
+        btnChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeActionPerformed(evt);
+            }
+        });
         BackGroundPanel.add(btnChange, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 520, 140, -1));
 
         cbxActivity.setText("Active");
@@ -191,9 +198,35 @@ public class ManageMembers extends javax.swing.JFrame {
         txtEmail.setText(p.getEmail());
         txtOib.setText(p.getOib());
         txtPhoneNumber.setText(p.getPhoneNumber());
+        cbxActivity.setSelected(p.getActive()!= null ? p.getActive(): false);
 
     }//GEN-LAST:event_lstEntitiesValueChanged
 
+    private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
+        if(memberController.getEntity() == null){
+            JOptionPane.showMessageDialog(getRootPane(), "You have to SELECT a member to change its data.");
+            return;
+        }
+        verifyData();
+         try {
+            memberController.update();
+            load();
+            JOptionPane.showMessageDialog(getRootPane(), "You successfully updated data for: " + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname());
+        } catch (GymAppException e) {
+            JOptionPane.showMessageDialog(getRootPane(), e.getMessage());
+        }
+    }//GEN-LAST:event_btnChangeActionPerformed
+
+     private void verifyData() {
+        var m = memberController.getEntity();
+        m.setName(txtName.getText());
+        m.setSurname(txtSurname.getText());
+        m.setEmail(txtEmail.getText());
+        m.setOib(txtOib.getText());
+        m.setPhoneNumber(txtPhoneNumber.getText());
+        m.setActive(cbxActivity.isSelected());
+
+    }
     /**
      * @param args the command line arguments
      */
