@@ -156,6 +156,11 @@ public class ManageMembers extends javax.swing.JFrame {
         BackGroundPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 150, 20));
 
         btnRemove.setText("Remove");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
         BackGroundPanel.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 510, 90, -1));
 
         btnCreate.setText("Create");
@@ -183,7 +188,7 @@ public class ManageMembers extends javax.swing.JFrame {
                 btnClearActionPerformed(evt);
             }
         });
-        BackGroundPanel.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 210, 80, -1));
+        BackGroundPanel.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,6 +260,28 @@ public class ManageMembers extends javax.swing.JFrame {
         txtPhoneNumber.setText("");
         cbxActivity.setSelected(false);
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+         if (memberController.getEntity() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "You have to select a member before you delete it.");
+            return;
+        }
+
+        if (JOptionPane.showConfirmDialog(getRootPane(),
+                "Are you sure you want to delete \"" + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname() + "\"?", "Delete",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        try {
+            memberController.delete();
+            load();
+            JOptionPane.showMessageDialog(getRootPane(), "You successfully removed: " + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname());
+        } catch (GymAppException ex) {
+            JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
+        }
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
      private void verifyData() {
         var m = memberController.getEntity();
