@@ -23,7 +23,6 @@ public class ManageMembers extends javax.swing.JFrame {
      * Creates new form MainMenu
      */
     private MemberController memberController;
-    
 
     public ManageMembers() {
         initComponents();
@@ -61,13 +60,13 @@ public class ManageMembers extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtPhoneNumber = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtName1 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtSurname1 = new javax.swing.JTextField();
+        txtSurname = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtEmail1 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtOib1 = new javax.swing.JTextField();
+        txtOib = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
         btnChange = new javax.swing.JButton();
@@ -108,6 +107,11 @@ public class ManageMembers extends javax.swing.JFrame {
 
         BackGroundPanel.add(TitlePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 1050, 130));
 
+        lstEntities.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstEntitiesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstEntities);
 
         BackGroundPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 430, 360));
@@ -122,25 +126,25 @@ public class ManageMembers extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Name:");
         BackGroundPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, 60, 20));
-        BackGroundPanel.add(txtName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 210, 300, -1));
+        BackGroundPanel.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 210, 300, -1));
 
         jLabel9.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Surname:");
         BackGroundPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 240, 150, 20));
-        BackGroundPanel.add(txtSurname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 300, -1));
+        BackGroundPanel.add(txtSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 300, -1));
 
         jLabel10.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Email:");
         BackGroundPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 290, 150, 20));
-        BackGroundPanel.add(txtEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, 300, -1));
+        BackGroundPanel.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, 300, -1));
 
         jLabel11.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("OIB:");
         BackGroundPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, 150, 20));
-        BackGroundPanel.add(txtOib1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 300, -1));
+        BackGroundPanel.add(txtOib, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 300, -1));
 
         jLabel12.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -175,6 +179,21 @@ public class ManageMembers extends javax.swing.JFrame {
         Helper.manageMembersIsOpened = false;
     }//GEN-LAST:event_formWindowClosing
 
+    private void lstEntitiesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEntitiesValueChanged
+        if (evt.getValueIsAdjusting() || lstEntities.getSelectedValue() == null) {
+            return;
+        }
+
+        memberController.setEntity(lstEntities.getSelectedValue());
+        var p = memberController.getEntity();
+        txtName.setText(p.getName());
+        txtSurname.setText(p.getSurname());
+        txtEmail.setText(p.getEmail());
+        txtOib.setText(p.getOib());
+        txtPhoneNumber.setText(p.getPhoneNumber());
+
+    }//GEN-LAST:event_lstEntitiesValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -200,11 +219,11 @@ public class ManageMembers extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Member> lstEntities;
-    private javax.swing.JTextField txtEmail1;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JLabel txtMainTitle;
-    private javax.swing.JTextField txtName1;
-    private javax.swing.JTextField txtOib1;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtOib;
     private javax.swing.JTextField txtPhoneNumber;
-    private javax.swing.JTextField txtSurname1;
+    private javax.swing.JTextField txtSurname;
     // End of variables declaration//GEN-END:variables
 }
