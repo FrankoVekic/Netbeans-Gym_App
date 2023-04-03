@@ -87,4 +87,8 @@ public class Member extends gymapp.model.Entity {
         this.programMemberTrainer = programMemberTrainer;
     }
 
+    @Override
+    public String toString() {
+        return name + " " + surname;
+    }
 }

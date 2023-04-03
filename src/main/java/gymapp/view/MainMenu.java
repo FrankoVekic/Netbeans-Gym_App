@@ -4,8 +4,12 @@
  */
 package gymapp.view;
 
+import gymapp.controller.MemberController;
+import gymapp.model.Member;
 import gymapp.utility.Helper;
 import java.awt.Color;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 
 /**
@@ -19,9 +23,10 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents();
+        setTitle(Helper.getTitle(""));
         txtWelcoming.setText("Welcome " + Helper.admin.getName() + " " + Helper.admin.getSurname());
         txtMainTitle.setText("Home Page");
-        
+
     }
 
     /**
@@ -244,7 +249,13 @@ public class MainMenu extends javax.swing.JFrame {
         resetColor(btnPrograms);
         resetColor(btnTrainers);
         resetColor(btnManage);
-        txtMainTitle.setText("Members");
+        if (Helper.manageMembersIsOpened) {
+            return;
+        }
+        new ManageMembers().setVisible(true);
+        Helper.manageMembersIsOpened = true;
+
+
     }//GEN-LAST:event_btnMembersMousePressed
 
     private void btnTrainersMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrainersMousePressed
@@ -285,12 +296,12 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    void setColor(JPanel panel){
-        panel.setBackground(new Color(85,65,118));
+    void setColor(JPanel panel) {
+        panel.setBackground(new Color(85, 65, 118));
     }
-    
-    void resetColor(JPanel panel){
-        panel.setBackground(new Color(64,43,100));
+
+    void resetColor(JPanel panel) {
+        panel.setBackground(new Color(64, 43, 100));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -76,7 +76,7 @@ public class FakerInput {
                     + "." + faker.name().lastName().toLowerCase().replace(" ", "") + "@gmail.com");
             m.setOib(Helper.generateOib());
             m.setPhoneNumber(faker.phoneNumber().cellPhone());
-            m.setActive(faker.bool().bool());
+            m.setActive(Math.random() < 0.5 ? true : false);
             session.save(m);
             members.add(m);
 

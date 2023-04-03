@@ -23,7 +23,7 @@ public class Testing {
         m.setSurname("Member1");
      // m.setOib("");
         m.setEmail("new@gmail.com");
-        m.setActive(Boolean.TRUE);
+     // m.setActive(Boolean.TRUE);
         m.setPhoneNumber("+385919820403");
         
         mc.setEntity(m);

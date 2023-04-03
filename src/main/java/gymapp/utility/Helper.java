@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package gymapp.utility;
 
 import gymapp.model.Admin;
@@ -17,20 +16,21 @@ import us.codecraft.xsoup.Xsoup;
  *
  */
 public class Helper {
-    
+
     public static Admin admin;
     public static final String APP_TITLE = "Hustle Hard";
-    
-    public static String getTitle(String title){
-        
-        if(Helper.admin == null){
-            return APP_TITLE + " - " +  title;
+    public static boolean manageMembersIsOpened = false;
+
+    public static String getTitle(String title) {
+
+        if (Helper.admin == null) {
+            return APP_TITLE + " - " + title;
         }
         return APP_TITLE + " Welcome - " + admin.getName() + " " + admin.getSurname();
-    
-}
-    
-    public static String generateOib(){
+
+    }
+
+    public static String generateOib() {
         try {
             URL url = new URL("http://oib.itcentrala.com/oib-generator/");
             BufferedReader in = new BufferedReader(
@@ -47,10 +47,10 @@ public class Helper {
         } catch (Exception e) {
         }
         return "";
-        
+
     }
-    
-/*
+
+    /*
     private static String createOib() {
         int[] num = {0,1,2,3,4,5,6,7,8,9};
         String s = "";
@@ -62,5 +62,4 @@ public class Helper {
         }
           return s;
     }*/
-    
 }
