@@ -4,8 +4,9 @@
  */
 package gymapp.view;
 
-import gymapp.controller.MemberController;
+import gymapp.controller.TrainerController;
 import gymapp.model.Member;
+import gymapp.model.Trainer;
 import gymapp.utility.GymAppException;
 import gymapp.utility.Helper;
 import java.awt.Color;
@@ -19,30 +20,30 @@ import javax.swing.JPanel;
  *
  * @author frank
  */
-public class ManageMembers extends javax.swing.JFrame {
+public class ManageTrainers extends javax.swing.JFrame {
 
     /**
      * Creates new form MainMenu
      */
-    private MemberController memberController;
+    private TrainerController trainerController;
 
-    public ManageMembers() {
+    public ManageTrainers() {
         initComponents();
         setTitle(Helper.getTitle(""));
-        txtMainTitle.setText("MANAGE MEMBERS");;
-        memberController = new MemberController();
+        txtMainTitle.setText("MANAGE TRAINERS");;
+        trainerController = new TrainerController();
         load();
 
     }
 
     public void load() {
-        DefaultListModel<Member> members = new DefaultListModel<>();
-        List<Member> entities = memberController.read();
+        DefaultListModel<Trainer> trainers = new DefaultListModel<>();
+        List<Trainer> entities = trainerController.read();
 
-        for (Member m : entities) {
-            members.addElement(m);
+        for (Trainer t : entities) {
+            trainers.addElement(t);
         }
-        lstEntities.setModel(members);
+        lstEntities.setModel(trainers);
     }
 
     /**
@@ -60,7 +61,6 @@ public class ManageMembers extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstEntities = new javax.swing.JList<>();
-        jLabel2 = new javax.swing.JLabel();
         txtPhoneNumber = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
@@ -73,7 +73,6 @@ public class ManageMembers extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
-        cbxActivity = new javax.swing.JCheckBox();
         btnChange = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
 
@@ -84,36 +83,38 @@ public class ManageMembers extends javax.swing.JFrame {
             }
         });
 
-        BackGroundPanel.setBackground(new java.awt.Color(85, 65, 118));
+        BackGroundPanel.setBackground(new java.awt.Color(110, 89, 222));
         BackGroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        TitlePanel.setBackground(new java.awt.Color(110, 89, 222));
+        TitlePanel.setBackground(new java.awt.Color(85, 65, 118));
 
         txtMainTitle.setFont(new java.awt.Font("Arial Black", 0, 28)); // NOI18N
         txtMainTitle.setForeground(new java.awt.Color(255, 255, 255));
         txtMainTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/membersmanageicon.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trainersmanageicon.png"))); // NOI18N
 
         javax.swing.GroupLayout TitlePanelLayout = new javax.swing.GroupLayout(TitlePanel);
         TitlePanel.setLayout(TitlePanelLayout);
         TitlePanelLayout.setHorizontalGroup(
             TitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TitlePanelLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtMainTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addComponent(txtMainTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         TitlePanelLayout.setVerticalGroup(
             TitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TitlePanelLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addGroup(TitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtMainTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtMainTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(TitlePanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         BackGroundPanel.add(TitlePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 1070, 130));
@@ -126,12 +127,7 @@ public class ManageMembers extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lstEntities);
 
         BackGroundPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 430, 360));
-
-        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Active:");
-        BackGroundPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, 150, 20));
-        BackGroundPanel.add(txtPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 410, 300, -1));
+        BackGroundPanel.add(txtPhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 450, 300, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -142,25 +138,25 @@ public class ManageMembers extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Surname:");
-        BackGroundPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 240, 150, 20));
-        BackGroundPanel.add(txtSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 300, -1));
+        BackGroundPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, 150, 20));
+        BackGroundPanel.add(txtSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 300, -1));
 
         jLabel10.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Email:");
-        BackGroundPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 290, 150, 20));
-        BackGroundPanel.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, 300, -1));
+        BackGroundPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, 150, 20));
+        BackGroundPanel.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 300, -1));
 
         jLabel11.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("OIB:");
-        BackGroundPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, 150, 20));
-        BackGroundPanel.add(txtOib, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 300, -1));
+        BackGroundPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, 150, 20));
+        BackGroundPanel.add(txtOib, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 300, -1));
 
         jLabel12.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Phone Number");
-        BackGroundPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 150, 20));
+        BackGroundPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 430, 150, 20));
 
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -177,9 +173,6 @@ public class ManageMembers extends javax.swing.JFrame {
             }
         });
         BackGroundPanel.add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 90, -1));
-
-        cbxActivity.setText("Active");
-        BackGroundPanel.add(cbxActivity, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 460, 70, -1));
 
         btnChange.setText("Change");
         btnChange.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +206,7 @@ public class ManageMembers extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        Helper.manageMembersIsOpened = false;
+        Helper.manageTrainersIsOpened = false;
     }//GEN-LAST:event_formWindowClosing
 
     private void lstEntitiesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEntitiesValueChanged
@@ -221,39 +214,38 @@ public class ManageMembers extends javax.swing.JFrame {
             return;
         }
 
-        memberController.setEntity(lstEntities.getSelectedValue());
-        var p = memberController.getEntity();
+        trainerController.setEntity(lstEntities.getSelectedValue());
+        var p = trainerController.getEntity();
         txtName.setText(p.getName());
         txtSurname.setText(p.getSurname());
         txtEmail.setText(p.getEmail());
         txtOib.setText(p.getOib());
         txtPhoneNumber.setText(p.getPhoneNumber());
-        cbxActivity.setSelected(p.getActive()!= null ? p.getActive(): false);
 
     }//GEN-LAST:event_lstEntitiesValueChanged
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-         try {
-            memberController.setEntity(new Member());
+        try {
+            trainerController.setEntity(new Trainer());
             verifyData();
-            memberController.create();
+            trainerController.create();
             load();
-            JOptionPane.showMessageDialog(getRootPane(), "You successfully created member: " + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname());
+            JOptionPane.showMessageDialog(getRootPane(), "You successfully created trainer: " + trainerController.getEntity().getName() + " " + trainerController.getEntity().getSurname());
         } catch (GymAppException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
-         if(memberController.getEntity() == null){
-            JOptionPane.showMessageDialog(getRootPane(), "You have to SELECT a member to change its data.");
+        if (trainerController.getEntity() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "You have to SELECT a trainer to change its data.");
             return;
         }
         verifyData();
-         try {
-            memberController.update();
+        try {
+            trainerController.update();
             load();
-            JOptionPane.showMessageDialog(getRootPane(), "You successfully updated data for: " + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname());
+            JOptionPane.showMessageDialog(getRootPane(), "You successfully updated data for: " + trainerController.getEntity().getName() + " " + trainerController.getEntity().getSurname());
         } catch (GymAppException e) {
             JOptionPane.showMessageDialog(getRootPane(), e.getMessage());
         }
@@ -265,42 +257,40 @@ public class ManageMembers extends javax.swing.JFrame {
         txtEmail.setText("");
         txtOib.setText("");
         txtPhoneNumber.setText("");
-        cbxActivity.setSelected(false);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-         if (memberController.getEntity() == null) {
-            JOptionPane.showMessageDialog(getRootPane(), "You have to select a member before you delete it.");
+        if (trainerController.getEntity() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "You have to select a trainer before you remove him/her.");
             return;
         }
 
         if (JOptionPane.showConfirmDialog(getRootPane(),
-                "Are you sure you want to delete \"" + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname() + "\"?", "Delete",
+                "Are you sure you want to delete \"" + trainerController.getEntity().getName() + " " + trainerController.getEntity().getSurname() + "\"?", "Delete",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
             return;
         }
 
         try {
-            memberController.delete();
+            trainerController.delete();
             load();
-            JOptionPane.showMessageDialog(getRootPane(), "You successfully removed: " + memberController.getEntity().getName() + " " + memberController.getEntity().getSurname());
+            JOptionPane.showMessageDialog(getRootPane(), "You successfully removed: " + trainerController.getEntity().getName() + " " + trainerController.getEntity().getSurname());
         } catch (GymAppException ex) {
             JOptionPane.showMessageDialog(getRootPane(), ex.getMessage());
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
-     private void verifyData() {
-        var m = memberController.getEntity();
+    private void verifyData() {
+        var m = trainerController.getEntity();
         m.setName(txtName.getText());
         m.setSurname(txtSurname.getText());
         m.setEmail(txtEmail.getText());
         m.setOib(txtOib.getText());
         m.setPhoneNumber(txtPhoneNumber.getText());
-        m.setActive(cbxActivity.isSelected());
 
     }
-   
+
     /**
      * @param args the command line arguments
      */
@@ -319,16 +309,14 @@ public class ManageMembers extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnRemove;
-    private javax.swing.JCheckBox cbxActivity;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<Member> lstEntities;
+    private javax.swing.JList<Trainer> lstEntities;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JLabel txtMainTitle;
     private javax.swing.JTextField txtName;

@@ -264,7 +264,11 @@ public class MainMenu extends javax.swing.JFrame {
         resetColor(btnPrograms);
         resetColor(btnMembers);
         resetColor(btnManage);
-        txtMainTitle.setText("Trainers");
+        if (Helper.manageTrainersIsOpened) {
+            return;
+        }
+        new ManageTrainers().setVisible(true);
+        Helper.manageTrainersIsOpened = true;
     }//GEN-LAST:event_btnTrainersMousePressed
 
     private void btnProgramsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProgramsMousePressed
