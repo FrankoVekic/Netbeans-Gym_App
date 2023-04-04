@@ -84,7 +84,7 @@ public class ManageMembers extends javax.swing.JFrame {
             }
         });
 
-        BackGroundPanel.setBackground(new java.awt.Color(85, 65, 118));
+        BackGroundPanel.setBackground(new java.awt.Color(54, 33, 89));
         BackGroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TitlePanel.setBackground(new java.awt.Color(110, 89, 222));
