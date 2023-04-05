@@ -5,7 +5,11 @@
 package gymapp.view;
 
 import gymapp.controller.ProgramController;
+import gymapp.model.Program;
+import gymapp.utility.GymAppException;
 import gymapp.utility.Helper;
+import java.math.BigDecimal;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 
 /**
@@ -14,15 +18,13 @@ import javax.swing.table.TableColumn;
  */
 public class ManagePrograms extends javax.swing.JFrame {
 
-    
-    ProgramController pc;
-    
+    ProgramController programController;
+
     public ManagePrograms() {
         initComponents();
-        pc = new ProgramController();
+        programController = new ProgramController();
         setTitle(Helper.getTitle(""));
-        ProgramTableModel pmt = new ProgramTableModel(pc.read());
-        ProgramsTable.setModel(pmt);
+        load();
     }
 
     /**
@@ -47,6 +49,9 @@ public class ManagePrograms extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnCreate = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -135,6 +140,20 @@ public class ManagePrograms extends javax.swing.JFrame {
         jLabel4.setText("Title:");
         BackgroundPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 80, -1));
 
+        btnUpdate.setText("Update");
+        BackgroundPanel.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 490, 110, 40));
+
+        btnDelete.setText("Delete");
+        BackgroundPanel.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 490, 110, 40));
+
+        btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+        BackgroundPanel.add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 490, 110, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,22 +174,51 @@ public class ManagePrograms extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void ProgramsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProgramsTableMouseClicked
-        ProgramTableModel ptm = (ProgramTableModel)ProgramsTable.getModel();
-        
+        ProgramTableModel ptm = (ProgramTableModel) ProgramsTable.getModel();
+
         String name = ptm.getValueAt(ProgramsTable.getSelectedRow(), 0).toString();
         String description = ptm.getValueAt(ProgramsTable.getSelectedRow(), 1).toString();
         String price = ptm.getValueAt(ProgramsTable.getSelectedRow(), 2).toString();
-        
+
         txtTitle.setText(name);
         txtDescription.setText(description);
         txtPrice.setText(price);
     }//GEN-LAST:event_ProgramsTableMouseClicked
 
+     public void load() {
+       ProgramTableModel pmt = new ProgramTableModel(programController.read());
+       ProgramsTable.setModel(pmt);
+    }
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+         try {
+            programController.setEntity(new Program());
+            verifyData();
+            programController.create();
+            load();
+        } catch (GymAppException e) {
+            JOptionPane.showMessageDialog(getRootPane(), e.getMessage());
+        }
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void verifyData() {
+        var p = programController.getEntity();
+        p.setName(txtTitle.getText());
+        p.setDescription(txtDescription.getText());
+        try {
+            p.setPrice(new BigDecimal((txtPrice.getText()).toString()));
+        } catch (Exception e) {
+            p.setPrice(BigDecimal.ZERO);
+        }
+
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BackgroundPanel;
     private javax.swing.JTable ProgramsTable;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
