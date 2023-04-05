@@ -4,17 +4,25 @@
  */
 package gymapp.view;
 
+import gymapp.controller.ProgramController;
+import gymapp.utility.Helper;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author frank
  */
 public class ManagePrograms extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ManagePrograms
-     */
+    
+    ProgramController pc;
+    
     public ManagePrograms() {
         initComponents();
+        pc = new ProgramController();
+        setTitle(Helper.getTitle(""));
+        ProgramTableModel pmt = new ProgramTableModel(pc.read());
+        ProgramsTable.setModel(pmt);
     }
 
     /**
@@ -30,6 +38,8 @@ public class ManagePrograms extends javax.swing.JFrame {
         BackgroundPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ProgramsTable = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -42,7 +52,12 @@ public class ManagePrograms extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         BackgroundPanel.setBackground(new java.awt.Color(85, 65, 118));
         BackgroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -53,9 +68,36 @@ public class ManagePrograms extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("MANAGE PROGRAMS");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 300, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 300, 40));
 
-        BackgroundPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 530, 80));
+        BackgroundPanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 930, 80));
+
+        ProgramsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title", "Description", "Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(ProgramsTable);
+        if (ProgramsTable.getColumnModel().getColumnCount() > 0) {
+            ProgramsTable.getColumnModel().getColumn(0).setMinWidth(10);
+            ProgramsTable.getColumnModel().getColumn(0).setMaxWidth(60);
+            ProgramsTable.getColumnModel().getColumn(1).setMinWidth(40);
+            ProgramsTable.getColumnModel().getColumn(2).setMinWidth(10);
+            ProgramsTable.getColumnModel().getColumn(2).setMaxWidth(60);
+        }
+
+        BackgroundPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 890, 190));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,17 +111,21 @@ public class ManagePrograms extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        Helper.manageProgramsIsOpened = false;
+    }//GEN-LAST:event_formWindowClosing
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BackgroundPanel;
+    private javax.swing.JTable ProgramsTable;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

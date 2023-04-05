@@ -21,6 +21,7 @@ public class Helper {
     public static final String APP_TITLE = "Hustle Hard";
     public static boolean manageMembersIsOpened = false;
     public static boolean manageTrainersIsOpened = false;
+    public static boolean manageProgramsIsOpened = false;
 
     public static String getTitle(String title) {
 
