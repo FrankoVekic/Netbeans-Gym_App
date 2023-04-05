@@ -40,6 +40,13 @@ public class ManagePrograms extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         ProgramsTable = new javax.swing.JTable();
+        txtPrice = new javax.swing.JTextField();
+        txtTitle = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescription = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -88,6 +95,11 @@ public class ManagePrograms extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        ProgramsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProgramsTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(ProgramsTable);
         if (ProgramsTable.getColumnModel().getColumnCount() > 0) {
             ProgramsTable.getColumnModel().getColumn(0).setMinWidth(10);
@@ -97,7 +109,31 @@ public class ManagePrograms extends javax.swing.JFrame {
             ProgramsTable.getColumnModel().getColumn(2).setMaxWidth(60);
         }
 
-        BackgroundPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 890, 190));
+        BackgroundPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 890, 190));
+        BackgroundPanel.add(txtPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 340, 140, -1));
+        BackgroundPanel.add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 260, -1));
+
+        txtDescription.setColumns(20);
+        txtDescription.setLineWrap(true);
+        txtDescription.setRows(5);
+        jScrollPane1.setViewportView(txtDescription);
+
+        BackgroundPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 420, 120));
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Description:");
+        BackgroundPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 140, -1));
+
+        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Price:");
+        BackgroundPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 80, -1));
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Title:");
+        BackgroundPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 80, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,6 +154,18 @@ public class ManagePrograms extends javax.swing.JFrame {
         Helper.manageProgramsIsOpened = false;
     }//GEN-LAST:event_formWindowClosing
 
+    private void ProgramsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProgramsTableMouseClicked
+        ProgramTableModel ptm = (ProgramTableModel)ProgramsTable.getModel();
+        
+        String name = ptm.getValueAt(ProgramsTable.getSelectedRow(), 0).toString();
+        String description = ptm.getValueAt(ProgramsTable.getSelectedRow(), 1).toString();
+        String price = ptm.getValueAt(ProgramsTable.getSelectedRow(), 2).toString();
+        
+        txtTitle.setText(name);
+        txtDescription.setText(description);
+        txtPrice.setText(price);
+    }//GEN-LAST:event_ProgramsTableMouseClicked
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -125,7 +173,14 @@ public class ManagePrograms extends javax.swing.JFrame {
     private javax.swing.JTable ProgramsTable;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea txtDescription;
+    private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }
