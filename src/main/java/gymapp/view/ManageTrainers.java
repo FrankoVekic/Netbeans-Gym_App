@@ -257,6 +257,7 @@ public class ManageTrainers extends javax.swing.JFrame {
         txtEmail.setText("");
         txtOib.setText("");
         txtPhoneNumber.setText("");
+        trainerController.setEntity(null);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed

@@ -26,7 +26,7 @@ public class ProgramTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -35,19 +35,22 @@ public class ProgramTableModel extends AbstractTableModel {
         Object value = "??";
         switch (columnIndex) {
             case 0:
-                value = p.getName();
+                value = p.getId();
                 break;
             case 1:
-                value = p.getDescription();
+                value = p.getName();
                 break;
             case 2:
-                value = p.getPrice() + " €";
+                value = p.getDescription();
+                break;
+            case 3:
+                value = p.getPrice();
                 break;
         }
         return value;
     }
 
-    private String[] colNames = new String[]{"Title", "Description", "Price"};
+    private String[] colNames = new String[]{"Id","Title", "Description", "Price"};
 
     @Override
     public String getColumnName(int col) {

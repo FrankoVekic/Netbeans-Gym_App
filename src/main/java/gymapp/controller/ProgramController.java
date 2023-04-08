@@ -8,6 +8,7 @@ import gymapp.model.Program;
 import gymapp.utility.GymAppException;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -19,18 +20,34 @@ public class ProgramController extends Controller<Program> {
         return session.createQuery("from Program").list();
     }
 
+    public Program getSelectedProgram(String name) {
+        Program program = null;
+
+        try {
+            program = (Program) session.createQuery("from Program where name=:name")
+                    .setParameter("name", name).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        if (program == null) {
+            return null;
+        }
+        return program;
+    }
+
     @Override
     protected void controlCreate() throws GymAppException {
         controlName();
-        controlPrice();
         controlDescription();
+        controlPrice();
     }
 
     @Override
     protected void controlUpdate() throws GymAppException {
         controlNameUpdate();
-        controlPrice();
         controlDescription();
+        controlPrice();
+
     }
 
     @Override
@@ -96,15 +113,7 @@ public class ProgramController extends Controller<Program> {
         }
         if (entity.getName().trim().length() < 2) {
             throw new GymAppException("Name has to have atleast 2 characters.");
-        }
-
-        List<Program> programs = session.createQuery("from Program p"
-                + " where p.name=:name and p.id !=id ")
-                .setParameter("name", entity.getName())
-                .setParameter("id", entity.getId()).list();
-        if (programs != null && programs.size() > 0) {
-            throw new GymAppException("This Program name is already in use.");
-        }
+        }   
     }
 
 }

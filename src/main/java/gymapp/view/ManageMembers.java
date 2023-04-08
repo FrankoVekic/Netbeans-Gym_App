@@ -266,6 +266,7 @@ public class ManageMembers extends javax.swing.JFrame {
         txtOib.setText("");
         txtPhoneNumber.setText("");
         cbxActivity.setSelected(false);
+        memberController.setEntity(null);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
